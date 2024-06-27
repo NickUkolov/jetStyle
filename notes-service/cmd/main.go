@@ -7,8 +7,17 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"notes-service/config"
+	_ "notes-service/docs"
 	"notes-service/routes"
 )
+
+// @title           Notes Service
+// @version         1.0
+// @description     Notes service API
+// @termsOfService  http://swagger.io/terms/
+
+// @host      127.0.0.1:8001
+// @BasePath  /
 
 func main() {
 	config.LoadConfig()
@@ -25,8 +34,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
-
-	//db.AutoMigrate(&models.Note{})
 
 	r := gin.Default()
 	routes.RegisterRoutes(r, db)

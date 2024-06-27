@@ -1,6 +1,8 @@
 package routes
 
 import (
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"notes-service/controllers"
 	"notes-service/middlewares"
 	"notes-service/repositories"
@@ -14,7 +16,7 @@ func RegisterRoutes(router *gin.Engine, db *gorm.DB) {
 	noteRepo := &repositories.NoteRepository{DB: db}
 	noteService := &services.NoteService{Repo: noteRepo}
 	noteController := &controllers.NoteController{Service: noteService}
-
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.GET("/notes", middlewares.OptionalJWTAuthMiddleware(), noteController.GetAllNotes)
 	router.GET("/notes/:id", middlewares.OptionalJWTAuthMiddleware(), noteController.GetNoteByID)
 

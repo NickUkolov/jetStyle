@@ -13,6 +13,17 @@ type NoteController struct {
 	Service *services.NoteService
 }
 
+// GetAllNotes godoc
+// @Summary      Show all notes
+// @Tags         notes
+// @Accept       json
+// @Produce      json
+// @Param        offset  query  int  false  "Offset"
+// @Param        limit  query  int  false  "Limit"
+// @Param        query  query  string  false  "Query to search"
+// @Param        user_id  query  int  false  "User id to search"
+// @Success      200  {object}  []models.Note
+// @Router       /notes [get]
 func (ctrl *NoteController) GetAllNotes(c *gin.Context) {
 	limit, err := strconv.Atoi(c.DefaultQuery("limit", "10"))
 	if err != nil {
@@ -58,6 +69,14 @@ func (ctrl *NoteController) GetAllNotes(c *gin.Context) {
 	c.JSON(http.StatusOK, notes)
 }
 
+// GetNoteByID godoc
+// @Summary      Show note
+// @Tags         notes
+// @Accept       json
+// @Produce      json
+// @Param        id  path  int  true  "id"
+// @Success      200  {object}  models.Note
+// @Router       /notes/{id} [get]
 func (ctrl *NoteController) GetNoteByID(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -85,6 +104,13 @@ func (ctrl *NoteController) GetNoteByID(c *gin.Context) {
 	c.JSON(http.StatusOK, note)
 }
 
+// CreateNote godoc
+// @Summary      Show note
+// @Tags         notes
+// @Accept       json
+// @Produce      json
+// @Success      201  {object}  models.Note
+// @Router       /notes/{id} [post]
 func (ctrl *NoteController) CreateNote(c *gin.Context) {
 	var noteInput models.NoteInput
 	if err := c.ShouldBindJSON(&noteInput); err != nil {
@@ -108,6 +134,14 @@ func (ctrl *NoteController) CreateNote(c *gin.Context) {
 	c.JSON(http.StatusCreated, note)
 }
 
+// UpdateNote godoc
+// @Summary      Show note
+// @Tags         notes
+// @Accept       json
+// @Produce      json
+// @Param        id  path  int  true  "id"
+// @Success      202  {object}  models.Note
+// @Router       /notes/{id} [put]
 func (ctrl *NoteController) UpdateNote(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -149,6 +183,14 @@ func (ctrl *NoteController) UpdateNote(c *gin.Context) {
 	c.JSON(http.StatusOK, note)
 }
 
+// DeleteNote godoc
+// @Summary      Show note
+// @Tags         notes
+// @Accept       json
+// @Produce      json
+// @Param        id  path  int  true  "id"
+// @Success      204  {object}  models.Note
+// @Router       /notes/{id} [delete]
 func (ctrl *NoteController) DeleteNote(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
