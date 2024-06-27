@@ -1,0 +1,128 @@
+basePath: /
+definitions:
+  models.Note:
+    properties:
+      authorID:
+        type: integer
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      public:
+        type: boolean
+    type: object
+host: 127.0.0.1:8001
+info:
+  contact: {}
+  description: Notes service API
+  termsOfService: http://swagger.io/terms/
+  title: Notes Service
+  version: "1.0"
+paths:
+  /notes:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Query to search
+        in: query
+        name: query
+        type: string
+      - description: User id to search
+        in: query
+        name: user_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Note'
+            type: array
+      summary: Show all notes
+      tags:
+      - notes
+  /notes/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/models.Note'
+      summary: Show note
+      tags:
+      - notes
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Note'
+      summary: Show note
+      tags:
+      - notes
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Note'
+      summary: Show note
+      tags:
+      - notes
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/models.Note'
+      summary: Show note
+      tags:
+      - notes
+swagger: "2.0"
