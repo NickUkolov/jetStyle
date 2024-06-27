@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:14-alpine
+    container_name: db
+    env_file:
+      - .env.local
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - microservices_network
+
+  auth-service:
+    build:
+      context: ./auth-service
+    container_name: auth-service
+    env_file:
+      - .env.local
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - microservices_network
+
+  notes-service:
+    build:
+      context: ./notes-service
+    container_name: notes-service
+    depends_on:
+      - db
+    env_file:
+      - .env.local
+    ports:
+      - "8001:8001"
+    networks:
+      - microservices_network
+
+volumes:
+  postgres_data:
+
+networks:
+  microservices_network:
