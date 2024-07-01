@@ -1,4 +1,4 @@
-from typing import AsyncGenerator
+from typing import Generator
 
 from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
@@ -12,7 +12,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 
-def get_db() -> AsyncGenerator:
+def get_db() -> Generator:
     with SessionLocal() as session:
         try:
             yield session
